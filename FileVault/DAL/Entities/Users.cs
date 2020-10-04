@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace FileVault
+namespace FileVault.DAL.Entities
 {
     public partial class Users
     {

@@ -1,8 +1,7 @@
-﻿using System;
+﻿using FileVault.DAL.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace FileVault
+namespace FileVault.DAL
 {
     public partial class VaultFileContext : DbContext
     {
