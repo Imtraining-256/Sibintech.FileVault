@@ -14,9 +14,9 @@ namespace FileVault.DAL
         {
         }
 
-        public virtual DbSet<Files> Files { get; set; }
-        public virtual DbSet<UploadFiles> UploadFiles { get; set; }
-        public virtual DbSet<Users> Users { get; set; }
+        public virtual DbSet<File> Files { get; set; }
+        public virtual DbSet<UploadFile> UploadFiles { get; set; }
+        public virtual DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -29,14 +29,14 @@ namespace FileVault.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Files>(entity =>
+            modelBuilder.Entity<File>(entity =>
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
                 entity.Property(e => e.Hash).HasMaxLength(64);
             });
 
-            modelBuilder.Entity<UploadFiles>(entity =>
+            modelBuilder.Entity<UploadFile>(entity =>
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
@@ -55,7 +55,7 @@ namespace FileVault.DAL
                     .HasConstraintName("FK_UploadFiles_Users");
             });
 
-            modelBuilder.Entity<Users>(entity =>
+            modelBuilder.Entity<User>(entity =>
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
 

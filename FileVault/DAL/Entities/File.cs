@@ -2,17 +2,17 @@
 
 namespace FileVault.DAL.Entities
 {
-    public partial class Files
+    public partial class File
     {
-        public Files()
+        public File()
         {
-            UploadFiles = new HashSet<UploadFiles>();
+            UploadFiles = new HashSet<UploadFile>();
         }
 
         public int Id { get; set; }
         public string Hash { get; set; }
         public byte[] Content { get; set; }
 
-        public virtual ICollection<UploadFiles> UploadFiles { get; set; }
+        public virtual ICollection<UploadFile> UploadFiles { get; set; }
     }
 }

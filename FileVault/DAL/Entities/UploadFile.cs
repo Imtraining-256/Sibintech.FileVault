@@ -2,7 +2,7 @@
 
 namespace FileVault.DAL.Entities
 {
-    public partial class UploadFiles
+    public partial class UploadFile
     {
         public int Id { get; set; }
         public int? UserId { get; set; }
@@ -10,7 +10,7 @@ namespace FileVault.DAL.Entities
         public DateTime? UploadDate { get; set; }
         public string FileName { get; set; }
 
-        public virtual Files File { get; set; }
-        public virtual Users User { get; set; }
+        public virtual File File { get; set; }
+        public virtual User User { get; set; }
     }
 }
