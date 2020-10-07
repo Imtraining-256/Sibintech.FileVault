@@ -4,9 +4,14 @@ namespace FileVault.DAL.Entities
 {
     public partial class User
     {
-        public User()
+        private User()
         {
             UploadFiles = new HashSet<UploadFile>();
+        }
+
+        public User(string name)
+        {
+            Name = name;
         }
 
         public int Id { get; set; }

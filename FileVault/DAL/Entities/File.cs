@@ -4,9 +4,16 @@ namespace FileVault.DAL.Entities
 {
     public partial class File
     {
-        public File()
+        private File()
         {
             UploadFiles = new HashSet<UploadFile>();
+        }
+
+        public File(byte[] content, string hash)
+        {
+            Content = content;
+
+            Hash = hash;
         }
 
         public int Id { get; set; }

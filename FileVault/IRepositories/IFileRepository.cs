@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 namespace FileVault.IRepositories
 {
-    interface IFileRepository
+    public interface IFileRepository
     {
         public void AddFile(File file);
-        public File FindFile(byte[] hash);
+        public File FindFile(string hash);
         public ICollection<UploadFile> FindFilesForUser(int userId);
         public void Delete(int id);
-        public void Save();
+        public void Save(); 
     }
 }
