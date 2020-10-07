@@ -1,6 +1,5 @@
-﻿using System.Collections;
+﻿using FileVault.DAL.Entities;
 using System.Collections.Generic;
-using FileVault.DAL.Entities;
 
 namespace FileVault.IRepositories
 {
@@ -8,7 +7,8 @@ namespace FileVault.IRepositories
     {
         public void AddFile(File file);
         public File FindFile(byte[] hash);
-
-        public ICollection<File> FindFilesForUser(int userId);
+        public ICollection<UploadFile> FindFilesForUser(int userId);
+        public void Delete(int id);
+        public void Save();
     }
 }
