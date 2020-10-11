@@ -4,6 +4,7 @@ using FileVault.Queries;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -80,8 +81,16 @@ namespace FileVault.Handlers
 
         private string CalcHash(byte[] content)
         {
-            //todo sha256 
-            return Guid.NewGuid().ToString();
+            byte[] bytes = new SHA256Managed().ComputeHash(content);
+
+            var hash = new System.Text.StringBuilder();
+
+            foreach (var theByte in bytes)
+            {
+                hash.Append(theByte.ToString("x2"));
+            }
+
+            return hash.ToString();
         }
 
     }
