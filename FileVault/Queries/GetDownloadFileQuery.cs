@@ -1,10 +1,9 @@
-﻿using FileVault.DAL.Entities;
-using FileVault.Model;
+﻿using FileVault.Model;
 using MediatR;
 
 namespace FileVault.Queries
 {
-    public class GetDownloadFileQuery : IRequest<File>, IRequest<FileModel>
+    public class GetDownloadFileQuery : IRequest<FileModel>
     {
         public GetDownloadFileQuery(int id, string fileName)
         {

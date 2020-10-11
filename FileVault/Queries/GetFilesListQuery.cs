@@ -4,7 +4,7 @@ using FileVault.DAL.Entities;
 
 namespace FileVault.Queries
 {
-    public class GetFilesListQuery : IRequest<ICollection<UploadFile>>, IRequest<Unit>
+    public class GetFilesListQuery : IRequest<ICollection<UploadFile>>
     {
         public GetFilesListQuery(string userName)
         {
