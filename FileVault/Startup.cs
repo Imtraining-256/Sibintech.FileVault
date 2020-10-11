@@ -49,6 +49,8 @@ namespace FileVault
                 app.UseSpaStaticFiles();
             }
 
+            app.UseHttpsRedirection();
+
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
