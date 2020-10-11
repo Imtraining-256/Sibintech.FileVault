@@ -1,10 +1,9 @@
-﻿using MediatR;
+﻿using FileVault.DAL.Entities;
+using FileVault.Queries;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
-using FileVault.Model;
-using FileVault.Queries;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -23,35 +22,38 @@ namespace FileVault.Controllers
 
         // GET: api/<FilesController>
         [HttpGet]
-        public Task<IEnumerable<FileModel>> GetFilesList()
+        [Route("GetFilesList")]
+        public async Task<ICollection<UploadFile>> GetFilesList(string userName)
         {
-            var files=_mediator.Send(new GetFilesListQuery("Admin"));
+            var files= await _mediator.Send(new GetFilesListQuery(userName));
             return files;
         }
 
-        // GET api/<FilesController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet]
+        [Route("Download")]
+        public async Task<IActionResult> GetDownloadFile(int id, string fileName)
         {
-            return "value";
+            var file = await _mediator.Send(new GetDownloadFileQuery(id, fileName));
+
+            return File(file.Content, "", file.FileName);
         }
 
-        // POST api/<FilesController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        [Route("AddFile")]
+        public async Task<IActionResult> AddFile(string userName, byte[] content, string fileName)
         {
+            var uploadFile = await _mediator.Send(new AddFileToUserCommand(userName, content, fileName));
+
+            return Ok(uploadFile);
         }
 
-        // PUT api/<FilesController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpDelete]
+        [Route("Delete")]
+        public async Task<IActionResult> DeleteFile(int id)
         {
-        }
+            await _mediator.Send(new DeleteFileCommand(id));
 
-        // DELETE api/<FilesController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            return Ok();
         }
     }
 }
