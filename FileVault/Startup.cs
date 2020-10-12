@@ -1,6 +1,8 @@
+using FileVault.DAL;
+using FileVault.Queries;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,6 +28,15 @@ namespace FileVault
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            services.AddDbContext<VaultFileContext>();
+
+            services.AddControllers();
+
+            services.AddMediatR(typeof(AddFileToUserCommand));
+            services.AddMediatR(typeof(DeleteFileCommand));
+            services.AddMediatR(typeof(GetDownloadFileQuery));
+            services.AddMediatR(typeof(GetFilesListQuery));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,7 +53,6 @@ namespace FileVault
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
             app.UseStaticFiles();
             if (!env.IsDevelopment())
             {
