@@ -23,6 +23,9 @@ namespace FileVault
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddControllers();
+
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -31,12 +34,7 @@ namespace FileVault
 
             services.AddDbContext<VaultFileContext>();
 
-            services.AddControllers();
-
             services.AddMediatR(typeof(AddFileToUserCommand));
-            services.AddMediatR(typeof(DeleteFileCommand));
-            services.AddMediatR(typeof(GetDownloadFileQuery));
-            services.AddMediatR(typeof(GetFilesListQuery));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
