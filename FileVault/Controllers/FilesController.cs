@@ -3,6 +3,7 @@ using FileVault.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -23,10 +24,12 @@ namespace FileVault.Controllers
         // GET: api/<FilesController>
         [HttpGet]
         [Route("GetFilesList")]
-        public async Task<ICollection<UploadFile>> GetFilesList(string userName)
+        //todo empty string 
+        public async Task<IActionResult> GetFilesList(string userName)
         {
             var files= await _mediator.Send(new GetFilesListQuery(userName));
-            return files;
+
+            return files.Any() ? Ok(files) : (IActionResult) NotFound(userName);
         }
 
         [HttpGet]
@@ -35,7 +38,7 @@ namespace FileVault.Controllers
         {
             var file = await _mediator.Send(new GetDownloadFileQuery(id, fileName));
 
-            return File(file.Content, "", file.FileName);
+            return File(file.Content, "APPLICATION/octet-stream", file.FileName);
         }
 
         [HttpPost]
