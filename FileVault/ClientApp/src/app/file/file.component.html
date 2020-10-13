@@ -1,0 +1,23 @@
+<h1>Список файлов</h1>
+<input type="button" value="Загрузить" class="btn btn-default" (click)="upload()" />
+<table *ngIf="tableMode; else create" class="table table-striped">
+  <thead>
+    <tr>
+      <td>Модель</td>
+      <td>Производитель</td>
+      <td>Цена</td>
+      <td></td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let f of files">
+      <td>{{f?.uploadDate}}</td>
+        <td>{{f?.fileName}}</td>
+        <td>
+          <button class="btn btn-sm btn-primary" (click)="download()">Скачать</button>
+          <button class="btn btn-sm btn-danger" (click)="delete(p)">Удалить</button>
+        </td>
+    </tr>
+  </tbody>
+</table>
+
