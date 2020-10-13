@@ -8,11 +8,15 @@ import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { FileComponent } from "./file/file.component";
 
+import { GroupByDateProvider } from "../pipes/groupByDate";
+
+
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
-    FileComponent
+    FileComponent,
+    GroupByDateProvider
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
