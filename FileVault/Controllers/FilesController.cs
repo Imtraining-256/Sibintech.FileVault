@@ -38,7 +38,9 @@ namespace FileVault.Controllers
         {
             var file = await _mediator.Send(new GetDownloadFileQuery(id, fileName));
 
-            return File(file.Content, "APPLICATION/octet-stream", file.FileName);
+            return file == null
+                ? (IActionResult) NotFound(fileName)
+                : File(file.Content, "APPLICATION/octet-stream", file.FileName);
         }
 
         [HttpPost]
