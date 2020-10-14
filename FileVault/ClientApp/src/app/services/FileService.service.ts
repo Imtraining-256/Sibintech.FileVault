@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse, HttpEventType } from '@angular/common/http';
 import { UploadFile } from "../models/uploadFile";
+import { Observable } from "rxjs";
 
 @Injectable()
 export class FileService {
@@ -25,14 +26,17 @@ export class FileService {
     return this.http.get(this.url, {params});
   }
 
-  addFile(userName: string, content: Int8Array, fileName: string) {
-    let params = new HttpParams();
 
-    params = params.append('userName', userName);
-    params = params.append('content', String(content));
-    params = params.append('fileName', fileName);
+  public addFile = (file) => {
 
-    return this.http.post(this.url, {params});
+    let fileToUpload = <File>file;
+    const formData = new FormData();
+    formData.append('file', fileToUpload, fileToUpload.name);
+    formData.append('userName', 'Fedya');
+    this.http.post(this.url + 'AddFile', formData, { reportProgress: true, observe: 'events' })
+      .subscribe(event => {
+        console.log(event);
+      });
   }
 
   deleteFile(id: number) {

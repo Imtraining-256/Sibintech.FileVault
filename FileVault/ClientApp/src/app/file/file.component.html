@@ -1,6 +1,9 @@
 <h1>Список файлов</h1>
 <input type="button" value="Загрузить" class="btn btn-default" (click)="upload()" />
-<table *ngIf="tableMode; else create" class="table table-striped">
+
+<input type="file" (change)="uploadFile($event)" placeholder="Upload file" accept=".pdf,.doc,.docx">
+
+<table class="table table-striped">
   <thead>
     <tr>
       <td>Модель</td>
@@ -10,13 +13,14 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let f of files">
+    <tr *ngFor="let f of uploadFiles">
+      <td>{{f?.id}}</td>
       <td>{{f?.uploadDate}}</td>
-        <td>{{f?.fileName}}</td>
-        <td>
-          <button class="btn btn-sm btn-primary" (click)="download()">Скачать</button>
-          <button class="btn btn-sm btn-danger" (click)="delete(p)">Удалить</button>
-        </td>
+      <td>{{f?.fileName}}</td>
+      <td>
+        <button class="btn btn-sm btn-primary" (click)="download()">Скачать</button>
+        <button class="btn btn-sm btn-danger" (click)="delete(p)">Удалить</button>
+      </td>
     </tr>
   </tbody>
 </table>

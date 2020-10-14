@@ -1,10 +1,13 @@
-﻿using FileVault.DAL.Entities;
+﻿using System;
+using FileVault.DAL.Entities;
 using FileVault.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FileVault.Extensions;
+using Microsoft.AspNetCore.Http;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -23,7 +26,7 @@ namespace FileVault.Controllers
 
         // GET: api/<FilesController>
         [HttpGet]
-        [Route("GetFilesList")]
+        [Route("GetFilesList/{userName}")]
         //todo empty string 
         public async Task<IActionResult> GetFilesList(string userName)
         {
@@ -45,11 +48,11 @@ namespace FileVault.Controllers
 
         [HttpPost]
         [Route("AddFile")]
-        public async Task<IActionResult> AddFile(string userName, byte[] content, string fileName)
+        public async Task<IActionResult> AddFile([FromForm]IFormFile file, [FromForm]string userName)
         {
-            var uploadFile = await _mediator.Send(new AddFileToUserCommand(userName, content, fileName));
+            var uploadFile = await _mediator.Send(new AddFileToUserCommand(userName, await file.GetBytes(), file.FileName));
 
-            return Ok(uploadFile);
+            return Ok();
         }
 
         [HttpDelete]

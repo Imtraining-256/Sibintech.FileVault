@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FileService } from "../services/fileService.service";
 import { UploadFile } from "../models/uploadFile";
+import { Observable } from "rxjs";
+
 
 @Component({
   selector: 'file',
@@ -9,7 +11,7 @@ import { UploadFile } from "../models/uploadFile";
 })
 export class FileComponent implements OnInit {
 
-  uploadFile: UploadFile = new UploadFile();
+  uploadedFile: UploadFile = new UploadFile();
   uploadFiles: UploadFile[];
   tableModel: boolean = true;
 
@@ -23,8 +25,12 @@ export class FileComponent implements OnInit {
     this.fileService.getFilesList().subscribe((data: UploadFile[]) => this.uploadFiles = data);
   }
 
-  upload() {
-
+  uploadFile(event) {
+    let fileList: FileList = event.target.files;
+    if (fileList.length > 0) {
+      let file: File = fileList[0];
+      this.fileService.addFile(file);
+    }
   }
 
   download() {
