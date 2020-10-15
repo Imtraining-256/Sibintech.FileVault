@@ -48,16 +48,16 @@ namespace FileVault.Controllers
         {
             var uploadFile = await _mediator.Send(new AddFileToUserCommand(userName, await file.GetBytes(), file.FileName));
 
-            return Ok();
+            return uploadFile == null ? (IActionResult) NotFound() : Ok(uploadFile);
         }
 
         [HttpDelete]
         [Route("Delete/{id}")]
         public async Task<IActionResult> DeleteFile(int id)
         {
-            await _mediator.Send(new DeleteFileCommand(id));
+            var file = await _mediator.Send(new DeleteFileCommand(id));
 
-            return Ok();
+            return file == null ? (IActionResult) NotFound() : Ok(file);
         }
     }
 }
