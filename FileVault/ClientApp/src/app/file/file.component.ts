@@ -33,8 +33,8 @@ export class FileComponent implements OnInit {
     }
   }
 
-  download() {
-    
+  download(f: UploadFile) {
+    this.fileService.getDownload(f.id, f.fileName);
   }
 
   deleteFile(f: UploadFile) {

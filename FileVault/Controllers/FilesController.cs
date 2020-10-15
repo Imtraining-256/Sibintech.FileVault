@@ -33,7 +33,7 @@ namespace FileVault.Controllers
 
         [HttpGet]
         [Route("Download")]
-        public async Task<IActionResult> GetDownloadFile(int id, string fileName)
+        public async Task<IActionResult> GetDownloadFile([FromHeader]int id, [FromHeader]string fileName)
         {
             var file = await _mediator.Send(new GetDownloadFileQuery(id, fileName));
 

@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse, HttpEventType } from '@angular/common/http';
-import { UploadFile } from "../models/uploadFile";
-import { Observable } from "rxjs";
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable()
 export class FileService {
@@ -18,14 +16,19 @@ export class FileService {
   }
 
   getDownload(id: number, fileName: string) {
-    let params = new HttpParams();
 
-    params = params.append('id', String(id));
-    params = params.append('id', fileName);
+    let headers = new HttpHeaders().set('id', id.toString());
+    headers.set('fileName', fileName);
 
-    return this.http.get(this.url, {params});
+    this.http.get(this.url + 'Download', { headers: headers, responseType: 'blob' })
+      .subscribe((res) => {
+        var a = document.createElement("a");
+        a.href = URL.createObjectURL(res);
+        a.download = fileName;
+        // start download
+        a.click();
+      });
   }
-
 
   public addFile = (file) => {
 
