@@ -32,7 +32,7 @@ namespace FileVault.Controllers
         {
             var files= await _mediator.Send(new GetFilesListQuery(userName));
 
-            return files.Any() ? Ok(files) : (IActionResult) NotFound(userName);
+            return Ok(files);
         }
 
         [HttpGet]
@@ -56,7 +56,7 @@ namespace FileVault.Controllers
         }
 
         [HttpDelete]
-        [Route("Delete")]
+        [Route("Delete/{id}")]
         public async Task<IActionResult> DeleteFile(int id)
         {
             await _mediator.Send(new DeleteFileCommand(id));

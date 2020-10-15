@@ -1,25 +1,22 @@
-<h1>Список файлов</h1>
-<input type="button" value="Загрузить" class="btn btn-default" (click)="upload()" />
-
 <input type="file" (change)="uploadFile($event)" placeholder="Upload file" accept=".pdf,.doc,.docx">
+
+<h1>Список файлов</h1>
 
 <table class="table table-striped">
   <thead>
     <tr>
-      <td>Модель</td>
-      <td>Производитель</td>
-      <td>Цена</td>
+      <td>Дата загрузки</td>
+      <td>Имя файла</td>
       <td></td>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let f of uploadFiles">
-      <td>{{f?.id}}</td>
       <td>{{f?.uploadDate}}</td>
       <td>{{f?.fileName}}</td>
       <td>
         <button class="btn btn-sm btn-primary" (click)="download()">Скачать</button>
-        <button class="btn btn-sm btn-danger" (click)="delete(p)">Удалить</button>
+        <button class="btn btn-sm btn-danger" (click)="deleteFile(f)">Удалить</button>
       </td>
     </tr>
   </tbody>

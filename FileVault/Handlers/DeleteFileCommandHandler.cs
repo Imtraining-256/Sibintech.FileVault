@@ -24,6 +24,8 @@ namespace FileVault.Handlers
             if (file != null)
             {
                 _dbContext.UploadFiles.Remove(file);
+
+                await _dbContext.SaveChangesAsync();
             }
 
             return file;

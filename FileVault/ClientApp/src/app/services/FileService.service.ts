@@ -8,7 +8,7 @@ export class FileService {
 
   private url = "/api/files/";
 
-  private defaultUserName = "TestUser1";
+  private defaultUserName = "Fedya";
 
   constructor(private http: HttpClient) {
   }
@@ -40,6 +40,6 @@ export class FileService {
   }
 
   deleteFile(id: number) {
-    return this.http.delete(this.url + '/' + id);
+    return this.http.delete(this.url + 'Delete/' + id);
   }
 }

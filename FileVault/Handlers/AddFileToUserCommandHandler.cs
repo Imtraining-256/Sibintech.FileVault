@@ -74,6 +74,8 @@ namespace FileVault.Handlers
                 file = new File(content, hash);
 
                 await _dbContext.Files.AddAsync(file);
+
+                await _dbContext.SaveChangesAsync();
             }
 
             return file;

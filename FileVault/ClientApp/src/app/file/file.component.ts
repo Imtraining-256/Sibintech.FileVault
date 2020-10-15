@@ -34,11 +34,11 @@ export class FileComponent implements OnInit {
   }
 
   download() {
-
+    
   }
 
-  deleteFile() {
-
+  deleteFile(f: UploadFile) {
+    this.fileService.deleteFile(f.id).subscribe((data => this.loadFilesList()));
   }
 
 
