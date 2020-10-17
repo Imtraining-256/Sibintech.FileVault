@@ -31,34 +31,34 @@ namespace FileVault.DAL
         {
             modelBuilder.Entity<File>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.Property(e => e.Content).IsRequired();
 
-                entity.Property(e => e.Hash).HasMaxLength(64);
+                entity.Property(e => e.Hash).IsRequired();
             });
 
             modelBuilder.Entity<UploadFile>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
-                entity.Property(e => e.FileName).HasMaxLength(50);
+                entity.Property(e => e.FileName)
+                    .IsRequired()
+                    .HasMaxLength(50);
 
                 entity.Property(e => e.UploadDate).HasColumnType("datetime");
 
                 entity.HasOne(d => d.File)
                     .WithMany(p => p.UploadFiles)
                     .HasForeignKey(d => d.FileId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_UploadFiles_Files");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.UploadFiles)
                     .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_UploadFiles_Users");
             });
 
             modelBuilder.Entity<User>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(32)
