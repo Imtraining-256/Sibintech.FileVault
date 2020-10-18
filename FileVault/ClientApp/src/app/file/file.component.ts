@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FileService } from "../services/fileService.service";
 import { UploadFile } from "../models/uploadFile";
-import { Observable } from "rxjs";
+import { HttpEventType } from '@angular/common/http';
 
 
 @Component({
@@ -13,7 +13,6 @@ export class FileComponent implements OnInit {
 
   uploadedFile: UploadFile = new UploadFile();
   uploadFiles: UploadFile[];
-  tableModel: boolean = true;
 
   constructor(private fileService: FileService) { }
 
@@ -29,7 +28,10 @@ export class FileComponent implements OnInit {
     let fileList: FileList = event.target.files;
     if (fileList.length > 0) {
       let file: File = fileList[0];
-      this.fileService.addFile(file);
+      this.fileService.addFile(file).subscribe(event => {
+        if (event.type == HttpEventType.Response)
+          this.loadFilesList();
+      });
     }
   }
 

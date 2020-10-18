@@ -3,22 +3,20 @@
 <h1>Список файлов</h1>
 
 <table class="table table-striped">
-  <thead>
-    <tr>
+  <tr>
       <td>Дата загрузки</td>
       <td>Имя файла</td>
       <td></td>
     </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let f of uploadFiles">
-      <td>{{f?.uploadDate}}</td>
+  <ng-container *ngFor="let f of uploadFiles; let i = index">
+    <tr>
+      <td>{{i>0 && uploadFiles[i-1].uploadDate==f.uploadDate?'':f.uploadDate | date : 'dd MM yyyy'}}</td>
       <td>{{f?.fileName}}</td>
       <td>
         <button class="btn btn-sm btn-primary" (click)="download(f)">Скачать</button>
         <button class="btn btn-sm btn-danger" (click)="deleteFile(f)">Удалить</button>
       </td>
     </tr>
-  </tbody>
+  </ng-container>
 </table>
 

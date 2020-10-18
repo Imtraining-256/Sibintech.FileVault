@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable()
 export class FileService {
@@ -17,15 +17,13 @@ export class FileService {
 
   getDownload(id: number, fileName: string) {
 
-    let headers = new HttpHeaders().set('id', id.toString());
-    headers.set('fileName', fileName);
+    let params = new HttpParams().set('id', id.toString());
 
-    this.http.get(this.url + 'Download', { headers: headers, responseType: 'blob' })
+    this.http.get(this.url + 'Download', { params: params, responseType: 'blob' })
       .subscribe((res) => {
         var a = document.createElement("a");
         a.href = URL.createObjectURL(res);
         a.download = fileName;
-        // start download
         a.click();
       });
   }
@@ -36,10 +34,7 @@ export class FileService {
     const formData = new FormData();
     formData.append('file', fileToUpload, fileToUpload.name);
     formData.append('userName', 'Fedya');
-    this.http.post(this.url + 'AddFile', formData, { reportProgress: true, observe: 'events' })
-      .subscribe(event => {
-        console.log(event);
-      });
+    return this.http.post(this.url + 'AddFile', formData, { observe: 'events' });
   }
 
   deleteFile(id: number) {

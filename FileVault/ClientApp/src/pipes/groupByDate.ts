@@ -3,7 +3,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 @Pipe({ name: 'groupByCategory' })
 export class GroupByDateProvider implements PipeTransform {
 
-  transform(collection: Array<any>, property: string = 'date'): Array<any> {
+  transform(collection: Array<any>, property: string = 'uploadDate'): Array<any> {
     // prevents the application from breaking if the array of objects doesn't exist yet
     if (!collection) {
       return null;
