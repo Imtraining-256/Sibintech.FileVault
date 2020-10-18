@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FileVault.DAL.Entities
 {
@@ -16,6 +17,7 @@ namespace FileVault.DAL.Entities
             Hash = hash;
         }
 
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string Hash { get; set; }
         public byte[] Content { get; set; }

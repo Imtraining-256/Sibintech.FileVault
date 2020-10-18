@@ -23,7 +23,6 @@ namespace FileVault.Controllers
         // GET: api/<FilesController>
         [HttpGet]
         [Route("GetFilesList/{userName}")]
-        //todo empty string 
         public async Task<IActionResult> GetFilesList(string userName)
         {
             var files= await _mediator.Send(new GetFilesListQuery(userName));
@@ -33,12 +32,12 @@ namespace FileVault.Controllers
 
         [HttpGet]
         [Route("Download")]
-        public async Task<IActionResult> GetDownloadFile([FromHeader]int id, [FromHeader]string fileName)
+        public async Task<IActionResult> GetDownloadFile([FromQuery]int id)
         {
-            var file = await _mediator.Send(new GetDownloadFileQuery(id, fileName));
+            var file = await _mediator.Send(new GetDownloadFileQuery(id));
 
             return file == null
-                ? (IActionResult) NotFound(fileName)
+                ? (IActionResult) NotFound()
                 : File(file.Content, "APPLICATION/octet-stream", file.FileName);
         }
 
@@ -46,9 +45,9 @@ namespace FileVault.Controllers
         [Route("AddFile")]
         public async Task<IActionResult> AddFile([FromForm]IFormFile file, [FromForm]string userName)
         {
-            var uploadFile = await _mediator.Send(new AddFileToUserCommand(userName, await file.GetBytes(), file.FileName));
+            await _mediator.Send(new AddFileToUserCommand(userName, await file.GetBytes(), file.FileName));
 
-            return uploadFile == null ? (IActionResult) NotFound() : Ok(uploadFile);
+            return Ok();
         }
 
         [HttpDelete]

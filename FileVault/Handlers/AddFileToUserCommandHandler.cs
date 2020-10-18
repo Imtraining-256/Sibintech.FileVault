@@ -4,13 +4,14 @@ using FileVault.Queries;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace FileVault.Handlers
 {
-    public class AddFileToUserCommandHandler : IRequestHandler<AddFileToUserCommand, UploadFile>
+    public class AddFileToUserCommandHandler : IRequestHandler<AddFileToUserCommand, Unit>
     {
         private readonly VaultFileContext _dbContext;
 
@@ -19,23 +20,23 @@ namespace FileVault.Handlers
             _dbContext = dbContext;
         }
 
-        public async Task<UploadFile> Handle(AddFileToUserCommand request, CancellationToken cancellationToken)   
+        public async Task<Unit> Handle(AddFileToUserCommand request, CancellationToken cancellationToken)   
         {
             var user = await GetOrCreateUser(request.UserName);
 
             var file = await GetOrCreateFile(request.Content);
 
-            var uploadFile = await AddFileToUser(user, file, request.FileName);
+            await AddFileToUser(user, file, request.FileName);
 
             await _dbContext.SaveChangesAsync(cancellationToken);
 
-            return uploadFile;
+            return Unit.Value;
         }
 
         private async Task<UploadFile> AddFileToUser(User user, File file, string requestFileName)
         {
             var uploadFile =
-                await _dbContext.UploadFiles.FirstOrDefaultAsync(r => r.Id == user.Id && r.FileId == file.Id && r.FileName == requestFileName);
+                await _dbContext.UploadFiles.FirstOrDefaultAsync(r => r.UserId == user.Id && r.FileId == file.Id && r.FileName == requestFileName);
 
             if (uploadFile != null)
             {
@@ -43,6 +44,8 @@ namespace FileVault.Handlers
             }
 
             uploadFile = new UploadFile(file.Id, requestFileName, DateTime.Now);
+
+            user.UploadFiles ??= new List<UploadFile>();
 
             user.UploadFiles.Add(uploadFile);
 
@@ -83,7 +86,9 @@ namespace FileVault.Handlers
 
         private string CalcHash(byte[] content)
         {
-            byte[] bytes = new SHA256Managed().ComputeHash(content);
+            using var sha256 = new SHA256Managed();
+
+            byte[] bytes = sha256.ComputeHash(content);
 
             var hash = new System.Text.StringBuilder();
 

@@ -1,9 +1,8 @@
-﻿using FileVault.DAL.Entities;
-using MediatR;
+﻿using MediatR;
 
 namespace FileVault.Queries
 {
-    public class AddFileToUserCommand : IRequest<UploadFile>
+    public class AddFileToUserCommand : IRequest<Unit>
     {
         public AddFileToUserCommand(string userName, byte[] content, string fileName)
         {

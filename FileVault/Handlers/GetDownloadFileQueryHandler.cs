@@ -18,9 +18,9 @@ namespace FileVault.Handlers
             this._db = _db;
         }
 
-        public async Task<FileModel> Handle(GetDownloadFileQuery request, CancellationToken cancellationToken)
+        public Task<FileModel> Handle(GetDownloadFileQuery request, CancellationToken cancellationToken)
         {
-            return await _db.UploadFiles.Where(r => r.Id == request.Id)
+            return _db.UploadFiles.Where(r => r.Id == request.Id)
                 .Include(r => r.File)
                 .Select(r => new FileModel() { Content = r.File.Content, FileName = r.FileName })
                 .FirstOrDefaultAsync();

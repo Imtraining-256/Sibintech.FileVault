@@ -5,13 +5,11 @@ namespace FileVault.Queries
 {
     public class GetDownloadFileQuery : IRequest<FileModel>
     {
-        public GetDownloadFileQuery(int id, string fileName)
+        public GetDownloadFileQuery(int id)
         {
             Id = id;
-            FileName = fileName;
         }
 
         public int Id { get; private set; }
-        public string FileName { get; private set; }
     }
 }
