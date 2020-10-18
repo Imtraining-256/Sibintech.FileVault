@@ -6,7 +6,7 @@ export class FileService {
 
   private url = "/api/files/";
 
-  private defaultUserName = "Fedya";
+  private defaultUserName = "Domain@Fedya";
 
   constructor(private http: HttpClient) {
   }
@@ -33,7 +33,7 @@ export class FileService {
     let fileToUpload = <File>file;
     const formData = new FormData();
     formData.append('file', fileToUpload, fileToUpload.name);
-    formData.append('userName', 'Fedya');
+    formData.append('userName', this.defaultUserName);
     return this.http.post(this.url + 'AddFile', formData, { observe: 'events' });
   }
 
