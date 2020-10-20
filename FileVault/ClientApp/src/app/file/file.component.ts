@@ -28,8 +28,9 @@ export class FileComponent implements OnInit {
     let fileList: FileList = event.target.files;
     if (fileList.length > 0) {
       let file: File = fileList[0];
-      this.fileService.addFile(file).subscribe(event => {
-        if (event.type == HttpEventType.Response)
+      this.fileService.addFile(file).subscribe(e => {
+        if (e.type == HttpEventType.Response)
+          event.srcElement.value = null;
           this.loadFilesList();
       });
     }
