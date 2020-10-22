@@ -43,7 +43,7 @@ namespace FileVault.Handlers
                 return uploadFile;
             }
 
-            uploadFile = new UploadFile(file.Id, requestFileName, DateTime.Now);
+            uploadFile = new UploadFile(file.Id, requestFileName, DateTime.Now.Date);
 
             user.UploadFiles ??= new List<UploadFile>();
 
